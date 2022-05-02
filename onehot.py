@@ -1,14 +1,16 @@
 import torch
 
-def get_tokens(_text, _pipeline):
-    tk_lists = []
-    for txt in _text:
-        temp_tk_list, _ = text_preprocessing(txt, _pipeline)
-        tk_lists.append(temp_tk_list)
-    return tk_lists
+def get_tokens(text, _pipeline):
+    nlp_pipeline = "spacy"
+    selected_nlp_pipeline = get_nlp_pipeline(_pipeline)
 
-def init_token2idx(_text, _pipeline):
-    tk_lists = get_tokens(_text, _pipeline)
+    return text_preprocessing(text, selected_nlp_pipeline, _pipeline)
+
+def init_token2idx(text_list, _pipeline):
+    selected_nlp_pipeline = get_nlp_pipeline(_pipeline)
+    tk_lists = []
+    for text in text_list:
+        tk_lists.append(text_preprocessing(text, selected_nlp_pipeline, nlp_pipeline))
         
     whole_tokens = [x for tk_list in tk_lists for x in tk_list]
     set_of_tokens = list(set(whole_tokens)) + ["UNK"]
@@ -24,7 +26,9 @@ def init_token2idx(_text, _pipeline):
     return token2idx_dict, idx2token_dict
 
 def tk2idx(_text, _pipeline, token2idx_dict, unk_ignore):
-    tk_lists = get_tokens(_text, _pipeline)[0]
+    selected_nlp_pipeline = get_nlp_pipeline(_pipeline)
+    tk_lists = text_preprocessing(_text, selected_nlp_pipeline, _pipeline)
+        
     
     idx_list = []
     if unk_ignore == True:
@@ -38,7 +42,7 @@ def tk2idx(_text, _pipeline, token2idx_dict, unk_ignore):
             idx_list.append(token2idx_dict[tk])
     return idx_list
 
-def custom_onehot_encoding(_idx_list, dim):
+def custom_one_hot_encoding(_idx_list, dim):
     tensor_list = []
     
     for idx in _idx_list:
@@ -51,7 +55,6 @@ def custom_onehot_encoding(_idx_list, dim):
 def tensor2token(_tensor):
     idx = (_tensor == 1).nonzero(as_tuple=True)[0].item()
     return idx2token_dict[idx]
-  
 
   
 def onehot_encoding(_encoder, _tks):
