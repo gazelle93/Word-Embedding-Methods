@@ -3,7 +3,14 @@ import spacy
 import nltk
 import gensim
 
-def word_tokenization(_input_text, _nlp_pipeline=None, _lower=False):
+def get_nlp_pipeline(_nlp_pipeline):
+    if _nlp_pipeline == "stanza":
+        return stanza.Pipeline('en')
+    elif _nlp_pipeline == "spacy":
+        return spacy.load("en_core_web_sm")
+    
+
+def word_tokenization(_input_text, nlp, _nlp_pipeline=None, _lower=False):
     if _lower == True:
         _input_text = _input_text.lower()
     
@@ -13,7 +20,6 @@ def word_tokenization(_input_text, _nlp_pipeline=None, _lower=False):
         return _input_text.split()
     
     elif _nlp_pipeline == "stanza":
-        nlp = stanza.Pipeline('en')
         text = nlp(_input_text)
 
         for sen in text.sentences:
@@ -24,7 +30,6 @@ def word_tokenization(_input_text, _nlp_pipeline=None, _lower=False):
         return input_tk_list
 
     elif _nlp_pipeline == "spacy":
-        nlp = spacy.load("en_core_web_sm")
         text = nlp(_input_text)
 
         for tk_idx, tk in enumerate(text):
