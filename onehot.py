@@ -54,6 +54,6 @@ def tensor2token(_tensor):
   
 
   
-def one_hot_encoding(_encoder, _tks):
+def onehot_encoding(_encoder, _tks):
     tk_list = [[x] for x in _tks[0]]
     return [torch.tensor(x) for x in _encoder.transform(tk_list).toarray()]
