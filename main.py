@@ -1,7 +1,7 @@
 import argparse
 
 from text_processing import get_nlp_pipeline, word_tokenization
-import onehot
+import my_onehot
 import my_skipgram
 
 def main(args):
@@ -20,11 +20,11 @@ def main(args):
     # One-hot Encoding
     if args.encoding == "onehot":
         if args.custom_enncoding == True:
-            token2idx_dict, idx2token_dict = onehot.init_token2idx(text_list, args.nlp_pipeline)
+            token2idx_dict, idx2token_dict = my_onehot.init_token2idx(text_list, args.nlp_pipeline)
             dim = len(idx2token_dict)
-            cur_tk2idx = onehot.tk2idx(cur_text, _pipeline, token2idx_dict, unk_ignore=args.unk_ignore)
+            cur_tk2idx = my_onehot.tk2idx(cur_text, _pipeline, token2idx_dict, unk_ignore=args.unk_ignore)
             
-            embeddings = onehot.custom_one_hot_encoding(cur_tk2idx, dim)
+            embeddings = my_onehot.custom_one_hot_encoding(cur_tk2idx, dim)
             print("Customized One-hot Encoding Result")
             print(embeddings)
             
@@ -34,11 +34,11 @@ def main(args):
             else:
                 sklearn_onehotencoder = preprocessing.OneHotEncoder()
                 
-            token2idx_dict, _ = onehot.init_token2idx(text_list, arg.nlp_pipeline)
+            token2idx_dict, _ = my_onehot.init_token2idx(text_list, arg.nlp_pipeline)
             sklearn_onehotencoder.fit([[t] for t in token2idx_dict])
-            tks = onehot.get_tokens(cur_text, args.nlp_pipeline)
+            tks = my_onehot.get_tokens(cur_text, args.nlp_pipeline)
             
-            embeddings = onehot.onehot_encoding(sklearn_onehotencoder, tks)
+            embeddings = my_onehot.onehot_encoding(sklearn_onehotencoder, tks)
             print("Sklearn One-hot Encoding Result")
             print(embeddings)
             
