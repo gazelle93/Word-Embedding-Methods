@@ -22,7 +22,6 @@
 # Parameters
 - nlp_pipeline(str, defaults to "spacy"): Tokenization method (spacy, stanza, nltk, gensim).
 - encoding(str, defaults to "bert"): Encoding method (onehot, skipgram, cbow, elmo, bert).
-- custom(bool, defaults to "True"): Using custom method for word embeddings or not (onthot, skipgram, cbow).
 - emb_dim(int, defaults to 10): The size of word embedding.
 - hidden_dim(int, defaults to 128): The hidden size of skipgram and cbow.
 - unk_ignore(bool, defaults to True): Ignore unseen word or not.
