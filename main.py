@@ -98,7 +98,7 @@ if __name__ == "__main__":
     parser.add_argument("--encoding", default="bert", type=str, help="The selection of encoding method.")
     parser.add_argument("--custom", default=True, help="Utilizing custom encoding.")
     parser.add_argument("--emb_dim", default=10, type=int, help="The size of word embedding.")
-    parser.add_argument("--hidden_dim", default=128, type=int, help="The size of hidden dimenstion.")
+    parser.add_argument("--hidden_dim", default=128, type=int, help="The size of hidden dimension.")
     parser.add_argument("--unk_ignore", default=True, help="Ignore unknown tokens.")
     parser.add_argument("--window", default=2, type=int, help="The selected window size.")
     args = parser.parse_args()
